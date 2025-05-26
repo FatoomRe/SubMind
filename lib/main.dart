@@ -13,6 +13,8 @@ void main() async {
 }
 
 class SubMindApp extends StatelessWidget {
+  const SubMindApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

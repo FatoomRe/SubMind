@@ -3,6 +3,8 @@ import 'package:sub_mind/Models/subscription.dart';
 import 'package:sub_mind/services/subscription_service.dart';
 
 class AddSubscriptionScreen extends StatefulWidget {
+  const AddSubscriptionScreen({super.key});
+
   @override
   State<AddSubscriptionScreen> createState() => _AddSubscriptionScreenState();
 }

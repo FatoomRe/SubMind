@@ -42,18 +42,19 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 16),
               Expanded(
-                child: subscriptions.isEmpty
-                    ? Center(child: Text('No subscriptions yet.'))
-                    : ListView.builder(
-                        itemCount: subscriptions.length,
-                        itemBuilder: (context, index) {
-                          final sub = subscriptions[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 12.0),
-                            child: SubscriptionCard(subscription: sub),
-                          );
-                        },
-                      ),
+                child:
+                    subscriptions.isEmpty
+                        ? Center(child: Text('No subscriptions yet.'))
+                        : ListView.builder(
+                          itemCount: subscriptions.length,
+                          itemBuilder: (context, index) {
+                            final sub = subscriptions[index];
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 12.0),
+                              child: SubscriptionCard(subscription: sub),
+                            );
+                          },
+                        ),
               ),
             ],
           ),
@@ -65,7 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
           await Navigator.pushNamed(context, '/add');
           setState(() {});
         },
-        child: Icon(Icons.add),
+        shape: const CircleBorder(),
+        elevation: 6,
+        child: Icon(Icons.add, color: Colors.white, size: 32),
       ),
     );
   }
