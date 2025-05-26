@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sub_mind/services/subscription_service.dart';
 import 'package:sub_mind/widgets/subscription_card.dart';
-import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
