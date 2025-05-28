@@ -53,26 +53,26 @@ class _HomeScreenState extends State<HomeScreen> {
                               // Use Hive key for uniqueness
                               direction: DismissDirection.endToStart,
                               background: Container(
-  margin: const EdgeInsets.only(
-    bottom: 12.0,
-  ), // Match the card's bottom padding
-  decoration: BoxDecoration(
-    color: Colors.redAccent,
-    // Only round the right side (so the left is flush under the card)
-    borderRadius: BorderRadius.only(
-      topRight: Radius.circular(18),
-      bottomRight: Radius.circular(18),
-      // No left radius!
-    ),
-  ),
-  alignment: Alignment.centerRight,
-  padding: EdgeInsets.symmetric(horizontal: 20),
-  child: Icon(
-    Icons.delete,
-    color: Colors.white,
-    size: 32,
-  ),
-),
+                                margin: const EdgeInsets.only(
+                                  bottom: 12.0,
+                                ), // Match the card's bottom padding
+                                decoration: BoxDecoration(
+                                  color: Colors.redAccent,
+                                  // Only round the right side (so the left is flush under the card)
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(18),
+                                    bottomRight: Radius.circular(18),
+                                    // No left radius!
+                                  ),
+                                ),
+                                alignment: Alignment.centerRight,
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
+                                  size: 32,
+                                ),
+                              ),
                               confirmDismiss: (direction) async {
                                 return await showDialog(
                                   context: context,
