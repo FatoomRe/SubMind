@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sub_mind/Models/subscription.dart';
+import 'package:sub_mind/Utils/logo_picker.dart';
 
 class SubscriptionCard extends StatelessWidget {
   final Subscription subscription;
 
-  const SubscriptionCard({Key? key, required this.subscription}) : super(key: key);
+  const SubscriptionCard({super.key, required this.subscription});
 
   @override
   Widget build(BuildContext context) {
     final formatter = DateFormat.yMMMd();
     return Container(
+      height: 90,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [Colors.purpleAccent, Colors.deepPurple.shade400],
@@ -27,11 +29,23 @@ class SubscriptionCard extends StatelessWidget {
         ],
       ),
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        leading: const Icon(Icons.subscriptions, color: Colors.white, size: 36),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 10,
+        ),
+        leading: CircleAvatar(
+          backgroundImage: AssetImage(getLogoAsset(subscription.name)),
+          backgroundColor: Colors.white,
+          radius: 24,
+        ),
+
         title: Text(
           subscription.name,
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
         ),
         subtitle: Text(
           '${subscription.price.toStringAsFixed(2)} SAR • ${formatter.format(subscription.dueDate)}',
