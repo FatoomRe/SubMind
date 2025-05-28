@@ -1,16 +1,42 @@
-# sub_mind
+# SubMind
 
-A new Flutter project.
+SubMind is an open-source Flutter app for managing your subscriptions.  
+**Note:** This project is still in active development and not yet production-ready.
+
+## Features
+
+- Add and track subscriptions (name, price, billing cycle, due date)
+- View monthly and yearly totals
+- Beautiful UI with custom logos for popular services
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/your-username/submind.git
+   cd submind/sub_mind
+   ```
 
-A few resources to get you started if this is your first Flutter project:
+2. **Install dependencies:**
+   ```sh
+   flutter pub get
+   ```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+3. **Run the app:**
+   ```sh
+   flutter run
+   ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Contributing
+
+Contributions are welcome!  
+Feel free to open issues or submit pull requests.
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+**Disclaimer:**  
+SubMind is a work in progress. Features and UI are subject to change.
