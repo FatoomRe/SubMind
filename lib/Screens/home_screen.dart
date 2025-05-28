@@ -72,63 +72,77 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder: (context, index) {
                           final sub = subscriptions[index];
                           return Dismissible(
-                            key: ValueKey(sub.key),
-                            direction: DismissDirection.endToStart,
-                            background: Container(
-                              // Remove margin, match card's border radius
-                              decoration: BoxDecoration(
-                                color: Colors.redAccent,
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                              alignment: Alignment.centerRight,
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              child: Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                                size: 32,
-                              ),
-                            ),
-                            confirmDismiss: (direction) async {
-                              return await showDialog(
-                                context: context,
-                                builder: (ctx) => AlertDialog(
-                                  title: Text('Delete Subscription'),
-                                  content: Text(
-                                    'Are you sure you want to delete "${sub.name}"?',
+                              key: ValueKey(sub.key),
+                              // Use Hive key for uniqueness
+                              direction: DismissDirection.endToStart,
+                              background: Container(
+                                margin: const EdgeInsets.only(
+                                  bottom: 12.0,
+                                ), // Match the card's bottom padding
+                                decoration: BoxDecoration(
+                                  color: Colors.redAccent,
+                                  // Only round the right side (so the left is flush under the card)
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(18),
+                                    bottomRight: Radius.circular(18),
+                                    // No left radius!
                                   ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.of(ctx).pop(false),
-                                      child: Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () => Navigator.of(ctx).pop(true),
-                                      child: Text(
-                                        'Delete',
-                                        style: TextStyle(
-                                          color: Colors.red,
+                                ),
+                                alignment: Alignment.centerRight,
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
+                                  size: 32,
+                                ),
+                              ),
+                              confirmDismiss: (direction) async {
+                                return await showDialog(
+                                  context: context,
+                                  builder:
+                                      (ctx) => AlertDialog(
+                                        title: Text('Delete Subscription'),
+                                        content: Text(
+                                          'Are you sure you want to delete "${sub.name}"?',
                                         ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed:
+                                                () => Navigator.of(
+                                                  ctx,
+                                                ).pop(false),
+                                            child: Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed:
+                                                () =>
+                                                    Navigator.of(ctx).pop(true),
+                                            child: Text(
+                                              'Delete',
+                                              style: TextStyle(
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                            onDismissed: (direction) {
-                              setState(() {
-                                _service.delete(sub);
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('${sub.name} deleted'),
-                                ),
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 12.0),
-                              child: SubscriptionCard(subscription: sub),
-                            ),
-                          );
+                                );
+                              },
+                              onDismissed: (direction) {
+                                setState(() {
+                                  _service.delete(sub);
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('${sub.name} deleted'),
+                                  ),
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 12.0),
+                                child: SubscriptionCard(subscription: sub),
+                              ),
+                            );
                         },
                       ),
               ),
