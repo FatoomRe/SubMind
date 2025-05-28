@@ -38,7 +38,6 @@ class SubscriptionCard extends StatelessWidget {
           backgroundColor: Colors.white,
           radius: 24,
         ),
-
         title: Text(
           subscription.name,
           style: const TextStyle(
