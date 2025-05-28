@@ -30,9 +30,33 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'SubMind',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              // Header row with + button on the right
+              Row(
+                children: [
+                  Text(
+                    'SubMind',
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                  ),
+                  Spacer(),
+                  // + Button with card gradient (now on the right)
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.purpleAccent, Colors.deepPurple.shade400],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      icon: Icon(Icons.add, color: Colors.white),
+                      onPressed: () async {
+                        await Navigator.pushNamed(context, '/add');
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 4),
               Text(
@@ -41,102 +65,78 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 16),
               Expanded(
-                child:
-                    subscriptions.isEmpty
-                        ? Center(child: Text('No subscriptions yet.'))
-                        : ListView.builder(
-                          itemCount: subscriptions.length,
-                          itemBuilder: (context, index) {
-                            final sub = subscriptions[index];
-                            return Dismissible(
-                              key: ValueKey(sub.key),
-                              // Use Hive key for uniqueness
-                              direction: DismissDirection.endToStart,
-                              background: Container(
-                                margin: const EdgeInsets.only(
-                                  bottom: 12.0,
-                                ), // Match the card's bottom padding
-                                decoration: BoxDecoration(
-                                  color: Colors.redAccent,
-                                  // Only round the right side (so the left is flush under the card)
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(18),
-                                    bottomRight: Radius.circular(18),
-                                    // No left radius!
-                                  ),
-                                ),
-                                alignment: Alignment.centerRight,
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: Icon(
-                                  Icons.delete,
-                                  color: Colors.white,
-                                  size: 32,
-                                ),
+                child: subscriptions.isEmpty
+                    ? Center(child: Text('No subscriptions yet.'))
+                    : ListView.builder(
+                        itemCount: subscriptions.length,
+                        itemBuilder: (context, index) {
+                          final sub = subscriptions[index];
+                          return Dismissible(
+                            key: ValueKey(sub.key),
+                            direction: DismissDirection.endToStart,
+                            background: Container(
+                              // Remove margin, match card's border radius
+                              decoration: BoxDecoration(
+                                color: Colors.redAccent,
+                                borderRadius: BorderRadius.circular(18),
                               ),
-                              confirmDismiss: (direction) async {
-                                return await showDialog(
-                                  context: context,
-                                  builder:
-                                      (ctx) => AlertDialog(
-                                        title: Text('Delete Subscription'),
-                                        content: Text(
-                                          'Are you sure you want to delete "${sub.name}"?',
+                              alignment: Alignment.centerRight,
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                                size: 32,
+                              ),
+                            ),
+                            confirmDismiss: (direction) async {
+                              return await showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  title: Text('Delete Subscription'),
+                                  content: Text(
+                                    'Are you sure you want to delete "${sub.name}"?',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.of(ctx).pop(false),
+                                      child: Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => Navigator.of(ctx).pop(true),
+                                      child: Text(
+                                        'Delete',
+                                        style: TextStyle(
+                                          color: Colors.red,
                                         ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed:
-                                                () => Navigator.of(
-                                                  ctx,
-                                                ).pop(false),
-                                            child: Text('Cancel'),
-                                          ),
-                                          TextButton(
-                                            onPressed:
-                                                () =>
-                                                    Navigator.of(ctx).pop(true),
-                                            child: Text(
-                                              'Delete',
-                                              style: TextStyle(
-                                                color: Colors.red,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
                                       ),
-                                );
-                              },
-                              onDismissed: (direction) {
-                                setState(() {
-                                  _service.delete(sub);
-                                });
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('${sub.name} deleted'),
-                                  ),
-                                );
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 12.0),
-                                child: SubscriptionCard(subscription: sub),
-                              ),
-                            );
-                          },
-                        ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            onDismissed: (direction) {
+                              setState(() {
+                                _service.delete(sub);
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('${sub.name} deleted'),
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 12.0),
+                              child: SubscriptionCard(subscription: sub),
+                            ),
+                          );
+                        },
+                      ),
               ),
             ],
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blueAccent,
-        onPressed: () async {
-          await Navigator.pushNamed(context, '/add');
-          setState(() {});
-        },
-        shape: const CircleBorder(),
-        elevation: 6,
-        child: Icon(Icons.add, color: Colors.white, size: 32),
-      ),
+      // Removed floatingActionButton
     );
   }
 }
