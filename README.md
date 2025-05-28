@@ -34,7 +34,7 @@ Feel free to open issues or submit pull requests.
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source and available under the [CC0-1.0 license](LICENSE).
 
 ---
 
